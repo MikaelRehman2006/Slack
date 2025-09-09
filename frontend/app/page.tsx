@@ -61,7 +61,7 @@ function ChatApp() {
     }
   };
 
-  const currentRoom = rooms.find(room => room.id === currentRoomId);
+  const currentRoom = rooms.find((room: Room) => room.id === currentRoomId);
 
   if (roomsLoading) {
     return (
