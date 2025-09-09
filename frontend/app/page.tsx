@@ -9,7 +9,6 @@ import { useRoomChat } from '../hooks/useRoomChat';
 import { Sidebar } from '../components/Sidebar';
 import { MessageList } from '../components/MessageList';
 import { MessageInput } from '../components/MessageInput';
-import { Room } from '../types';
 import { getCurrentUser } from '../lib/user';
 
 function ChatApp() {
@@ -30,14 +29,14 @@ function ChatApp() {
     currentUser.id
   );
 
-  const rooms = roomsData?.rooms || [];
+  const channels = roomsData?.rooms || [];
 
-  // Set first room as current when rooms load
+  // Set first channel as current when channels load
   useEffect(() => {
-    if (rooms.length > 0 && !currentRoomId) {
-      setCurrentRoomId(rooms[0].id);
+    if (channels.length > 0 && !currentRoomId) {
+      setCurrentRoomId(channels[0].id);
     }
-  }, [rooms, currentRoomId]);
+  }, [channels, currentRoomId]);
 
   const handleRoomSelect = (roomId: string) => {
     setCurrentRoomId(roomId);
@@ -56,13 +55,13 @@ function ChatApp() {
       setNewRoomName('');
       setShowAddRoom(false);
     } catch (error) {
-      console.error('Failed to create room:', error);
+      console.error('Failed to create channel:', error);
     }
   };
 
-  const currentRoom = rooms.find((room: Room) => room.id === currentRoomId);
+  const currentRoom = channels.find(channel => channel.id === currentRoomId);
 
-  if (roomsLoading) {
+  if (channelsLoading) {
     return (
       <div className="flex h-screen items-center justify-center">
         <div className="flex flex-col items-center space-y-4">
@@ -77,7 +76,7 @@ function ChatApp() {
     <div className="flex h-screen bg-white">
       {/* Sidebar */}
       <Sidebar
-        rooms={rooms}
+        rooms={channels}
         currentRoomId={currentRoomId}
         onRoomSelect={handleRoomSelect}
         onAddRoom={() => setShowAddRoom(true)}

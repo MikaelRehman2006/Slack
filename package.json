@@ -12,5 +12,8 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "graphql-tag": "^2.12.6"
   }
 }
