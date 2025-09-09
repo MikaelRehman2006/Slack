@@ -59,7 +59,7 @@ function ChatApp() {
     }
   };
 
-  const currentRoom = channels.find(channel => channel.id === currentRoomId);
+  const currentRoom = channels.find((channel: any) => channel.id === currentRoomId);
 
   if (channelsLoading) {
     return (
