@@ -10,14 +10,13 @@ import { Sidebar } from '../components/Sidebar';
 import { MessageList } from '../components/MessageList';
 import { MessageInput } from '../components/MessageInput';
 import { Room } from '../types';
-
-// Default user ID for demo purposes
-const DEFAULT_USER_ID = '550e8400-e29b-41d4-a716-446655440010';
+import { getCurrentUser } from '../lib/user';
 
 function ChatApp() {
   const [currentRoomId, setCurrentRoomId] = useState<string>('');
   const [showAddRoom, setShowAddRoom] = useState(false);
   const [newRoomName, setNewRoomName] = useState('');
+  const [currentUser] = useState(getCurrentUser());
 
   // Query rooms
   const { data: roomsData, loading: roomsLoading } = useQuery(GET_ROOMS);
@@ -28,7 +27,7 @@ function ChatApp() {
   // Room chat hook
   const { messages, loading: messagesLoading, sendMessage, sendingMessage } = useRoomChat(
     currentRoomId,
-    DEFAULT_USER_ID
+    currentUser.id
   );
 
   const rooms = roomsData?.rooms || [];
@@ -82,6 +81,7 @@ function ChatApp() {
         currentRoomId={currentRoomId}
         onRoomSelect={handleRoomSelect}
         onAddRoom={() => setShowAddRoom(true)}
+        currentUser={currentUser}
       />
 
       {/* Main Content */}

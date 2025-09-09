@@ -8,9 +8,14 @@ interface SidebarProps {
   currentRoomId?: string;
   onRoomSelect: (roomId: string) => void;
   onAddRoom: () => void;
+  currentUser?: {
+    id: string;
+    username: string;
+    avatar?: string;
+  };
 }
 
-export function Sidebar({ rooms, currentRoomId, onRoomSelect, onAddRoom }: SidebarProps) {
+export function Sidebar({ rooms, currentRoomId, onRoomSelect, onAddRoom, currentUser }: SidebarProps) {
   return (
     <div className="w-64 bg-slack-900 text-white flex flex-col h-full">
       {/* Header */}
@@ -75,7 +80,9 @@ export function Sidebar({ rooms, currentRoomId, onRoomSelect, onAddRoom }: Sideb
           <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
             <div className="w-2 h-2 bg-white rounded-full"></div>
           </div>
-          <span className="text-sm text-gray-300">Online</span>
+          <span className="text-sm text-gray-300">
+            {currentUser ? `${currentUser.username} (Online)` : 'Online'}
+          </span>
         </div>
       </div>
     </div>
