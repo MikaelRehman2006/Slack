@@ -61,7 +61,7 @@ function ChatApp() {
 
   const currentRoom = channels.find((channel: any) => channel.id === currentRoomId);
 
-  if (channelsLoading) {
+  if (roomsLoading) {
     return (
       <div className="flex h-screen items-center justify-center">
         <div className="flex flex-col items-center space-y-4">
