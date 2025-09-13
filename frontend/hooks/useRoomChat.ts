@@ -83,6 +83,27 @@ export function useRoomChat(roomId: string, userId: string) {
     }
   }, [messagesData, roomId]);
 
+  // Polling for new messages (replaces WebSocket for Vercel)
+  useEffect(() => {
+    if (!roomId) return;
+
+    const pollMessages = async () => {
+      try {
+        const { data } = await refetch();
+        if (data?.messages && data.messages.length > 0) {
+          setMessages(data.messages);
+        }
+      } catch (error) {
+        console.log('Polling error (expected on API failure):', error);
+      }
+    };
+
+    // Poll every 2 seconds for new messages
+    const interval = setInterval(pollMessages, 2000);
+    
+    return () => clearInterval(interval);
+  }, [roomId, refetch]);
+
   // Send message mutation
   const [sendMessage, { loading: sendingMessage }] = useMutation(SEND_MESSAGE, {
     onCompleted: (data) => {
@@ -148,6 +169,11 @@ export function useRoomChat(roomId: string, userId: string) {
         }
       });
       console.log('Send message result:', result);
+      
+      // Optimistically add message to local state immediately
+      if (result.data?.sendMessage) {
+        setMessages(prev => [...prev, result.data.sendMessage]);
+      }
     } catch (error) {
       console.error('Failed to send message:', error);
       // Add message locally when API fails
