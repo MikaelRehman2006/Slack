@@ -11,6 +11,12 @@ let channels = [
     name: 'random',
     description: 'Random chat',
     createdAt: new Date().toISOString()
+  },
+  {
+    id: 'channel_3',
+    name: 'test-channel',
+    description: 'Test channel for live chat functionality',
+    createdAt: new Date().toISOString()
   }
 ];
 
@@ -20,6 +26,30 @@ let messages = [
     body: 'Hello everyone!',
     userId: 'user_1',
     roomId: 'channel_1',
+    createdAt: new Date().toISOString(),
+    user: {
+      id: 'user_1',
+      username: 'TestUser',
+      email: 'test@example.com'
+    }
+  },
+  {
+    id: 'msg_2',
+    body: 'Welcome to the test channel! Try typing a message below.',
+    userId: 'user_1',
+    roomId: 'channel_3',
+    createdAt: new Date().toISOString(),
+    user: {
+      id: 'user_1',
+      username: 'TestUser',
+      email: 'test@example.com'
+    }
+  },
+  {
+    id: 'msg_3',
+    body: 'This channel is perfect for testing real-time chat functionality.',
+    userId: 'user_1',
+    roomId: 'channel_3',
     createdAt: new Date().toISOString(),
     user: {
       id: 'user_1',
