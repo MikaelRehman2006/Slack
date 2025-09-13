@@ -34,7 +34,8 @@ function ChatApp() {
     currentUser.id
   );
 
-  const channels = roomsData?.rooms || [
+  // Use fallback channels if API fails or is still loading
+  const channels = (roomsData?.rooms && roomsData.rooms.length > 0) ? roomsData.rooms : [
     // Fallback channels if API fails
     {
       id: 'channel_1',
