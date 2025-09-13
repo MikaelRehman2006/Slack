@@ -5,12 +5,16 @@ import { createClient } from 'graphql-ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3001/graphql',
+  uri: typeof window !== 'undefined' 
+    ? window.location.origin + '/api/graphql'
+    : 'http://localhost:3001/graphql',
 });
 
 const wsLink = typeof window !== 'undefined' ? new GraphQLWsLink(
   createClient({
-    url: 'ws://localhost:3001/graphql',
+    url: window.location.protocol === 'https:' 
+      ? `wss://${window.location.host}/api/graphql`
+      : `ws://${window.location.host}/api/graphql`,
   })
 ) : null;
 

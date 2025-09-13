@@ -8,9 +8,7 @@ import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { typeDefs } from './schema';
-import { resolvers } from './resolvers';
-import { sequelize, Room, User } from './models';
-import { redisClient } from './redis';
+import { simpleResolvers as resolvers } from './simple-resolvers';
 
 const app = express();
 const httpServer = createServer(app);
@@ -46,26 +44,7 @@ const server = new ApolloServer({
 
 const start = async () => {
   try {
-    // Initialize database
-    await sequelize.sync({ force: true }); // Force recreate tables for development
-    
-    // Create default data
-    await Room.bulkCreate([
-      { name: 'general', description: 'General discussion' },
-      { name: 'random', description: 'Random chat' },
-      { name: 'announcements', description: 'Important announcements' }
-    ]);
-
-    await User.bulkCreate([
-      { username: 'admin', email: 'admin@example.com' },
-      { username: 'john', email: 'john@example.com' },
-      { username: 'jane', email: 'jane@example.com' }
-    ]);
-
-    console.log('Database initialized with default data');
-    
-    // Connect to Redis
-    await redisClient.connect();
+    console.log('Starting server with in-memory data store...');
     
     // Start Apollo Server
     await server.start();
@@ -73,7 +52,7 @@ const start = async () => {
     // Apply middleware
     app.use('/graphql', 
       cors<cors.CorsRequest>({
-        origin: ['http://localhost:3000'],
+        origin: ['http://localhost:3000', 'https://*.vercel.app', 'https://*.vercel.com'],
         credentials: true,
       }),
       express.json(),
