@@ -11,11 +11,15 @@ export function useRoomChat(roomId: string, userId: string) {
   // Query messages
   const { data: messagesData, loading: messagesLoading, refetch } = useQuery(GET_MESSAGES, {
     variables: { roomId, limit: 50 },
-    skip: !roomId,
-    onCompleted: (data) => {
-      setMessages(data?.messages || []);
-    }
+    skip: !roomId
   });
+
+  // Update messages when data changes
+  useEffect(() => {
+    if (messagesData?.messages) {
+      setMessages(messagesData.messages);
+    }
+  }, [messagesData]);
 
   // Send message mutation
   const [sendMessage, { loading: sendingMessage }] = useMutation(SEND_MESSAGE, {
