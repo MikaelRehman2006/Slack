@@ -56,6 +56,30 @@ let messages = [
       username: 'TestUser',
       email: 'test@example.com'
     }
+  },
+  {
+    id: 'msg_4',
+    body: 'Hey everyone! I just joined the chat. 👋',
+    userId: 'user_2',
+    roomId: 'channel_3',
+    createdAt: new Date().toISOString(),
+    user: {
+      id: 'user_2',
+      username: 'CoolCoder123',
+      email: 'coolcoder@example.com'
+    }
+  },
+  {
+    id: 'msg_5',
+    body: 'Welcome CoolCoder! Try sending a message to test the live chat feature.',
+    userId: 'user_3',
+    roomId: 'channel_3',
+    createdAt: new Date().toISOString(),
+    user: {
+      id: 'user_3',
+      username: 'AwesomeBuilder456',
+      email: 'awesomebuilder@example.com'
+    }
   }
 ];
 
@@ -64,6 +88,18 @@ let users = [
     id: 'user_1',
     username: 'TestUser',
     email: 'test@example.com',
+    createdAt: new Date().toISOString()
+  },
+  {
+    id: 'user_2',
+    username: 'CoolCoder123',
+    email: 'coolcoder@example.com',
+    createdAt: new Date().toISOString()
+  },
+  {
+    id: 'user_3',
+    username: 'AwesomeBuilder456',
+    email: 'awesomebuilder@example.com',
     createdAt: new Date().toISOString()
   }
 ];
